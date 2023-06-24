@@ -8,24 +8,33 @@ import { prisma } from "~/server/db";
 const inputSchema = z.object({
   address: z.string(),
   govId: z.string(),
-  receipients: z.map(z.string(), z.object({ weight: z.number().int() })),
+  recipients: z.map(z.string(), z.object({ weight: z.number().int().positive() })),
 })
 
 export const clientRouter = createTRPCRouter({
   create: publicProcedure
     .input(inputSchema)
     .mutation(async ({ input }) => {
-      const result = await prisma.client.create({
-        data: {
-          address: input.address,
-          govId: input.govId,
-          receipients: {
-            create: Array.from(input.receipients).map(([address, { weight }]) => ({
-              toAddress: address,
-              weight,
-            }))
-          }
+      const data = {
+        address: input.address,
+        govId: input.govId,
+        recipients: {
+          create: Array.from(input.recipients).map(([address, { weight }]) => ({
+            toAddress: address,
+            weight,
+          }))
         }
+      }
+      const result = await prisma.client.upsert({
+        where: { address: input.address },
+        create: data,
+        update: {
+          govId: input.govId,
+          recipients: {
+            deleteMany: {},
+            create: data.recipients.create,
+          },
+        },
       })
       return {
         message: `not implemented yet`,

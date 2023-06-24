@@ -15,7 +15,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Receipient {
+model recipient {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   toAddress   String
   fromAddress String
@@ -28,5 +28,5 @@ model Client {
   govId       String
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  receipients Receipient[]
+  recipients recipient[]
 }
