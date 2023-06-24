@@ -63,7 +63,7 @@ function Home() {
 
   for (let i = 0; i < formData.numPeopleSplittingWill; i++) {
     rows.push(
-      <tr>
+      <tr key={i}>
         <td>
           <input
             className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
@@ -82,6 +82,12 @@ function Home() {
             className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
             type="text"
             placeholder="SIN Number"
+            value={formData.recipientSin[i]}
+            onChange={(e) => {
+              let tmp = [...formData.recipientSin];
+              tmp[i] = e.target.value;
+              setFormData({ ...formData, recipientSin: tmp });
+            }}
           />
         </td>
         <td>
@@ -89,6 +95,12 @@ function Home() {
             className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
             type="text"
             placeholder="Wallet Address"
+            value={formData.recipientWalletAddress[i]}
+            onChange={(e) => {
+              let tmp = [...formData.recipientWalletAddress];
+              tmp[i] = e.target.value;
+              setFormData({ ...formData, recipientWalletAddress: tmp });
+            }}
           />
         </td>
         <td>
@@ -96,6 +108,12 @@ function Home() {
             className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
             type="text"
             placeholder="Percentage of Will"
+            value={formData.recipientAllocation[i]}
+            onChange={(e) => {
+              let tmp = [...formData.recipientAllocation];
+              tmp[i] = e.target.value;
+              setFormData({ ...formData, recipientAllocation: tmp });
+            }}
           />
         </td>
       </tr>
@@ -147,7 +165,10 @@ function Home() {
             }}
           ></input>
         </span>
-        <tbody>{rows}</tbody>
+        <div>
+          <tbody>{rows}</tbody>
+        </div>
+        <button type="submit"></button>
       </form>
       <style jsx>{`
         form {
