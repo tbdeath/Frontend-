@@ -15,17 +15,26 @@ export const clientRouter = createTRPCRouter({
   create: publicProcedure
     .input(inputSchema)
     .mutation(async ({ input }) => {
-      const result = await prisma.client.create({
-        data: {
-          address: input.address,
+      const data = {
+        address: input.address,
+        govId: input.govId,
+        recipients: {
+          create: Array.from(input.recipients).map(([address, { weight }]) => ({
+            toAddress: address,
+            weight,
+          }))
+        }
+      }
+      const result = await prisma.client.upsert({
+        where: { address: input.address },
+        create: data,
+        update: {
           govId: input.govId,
           recipients: {
-            create: Array.from(input.recipients).map(([address, { weight }]) => ({
-              toAddress: address,
-              weight,
-            }))
-          }
-        }
+            deleteMany: {},
+            create: data.recipients.create,
+          },
+        },
       })
       return {
         message: `not implemented yet`,

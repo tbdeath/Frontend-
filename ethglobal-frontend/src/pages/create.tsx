@@ -90,7 +90,7 @@ function Home() {
       recipients: new Map(formData.recipientWalletAddress.map((address, i) => ([
         address,
         {
-          weight: z.number().int().parse(Number(formData.recipientAllocation[i])),
+          weight: Number(formData.recipientAllocation[i]),
         }
       ]))),
     });
@@ -162,6 +162,9 @@ function Home() {
         >
           Submit
         </button>
+        {createClient.isLoading && <p>Submitting...</p>}
+        {createClient.isSuccess && <p>Success!</p>}
+        {createClient.isError && <p>{JSON.stringify(createClient.error)}</p>}
       </form>
       <style jsx>{`
         form {
