@@ -36,9 +36,41 @@ export const clientRouter = createTRPCRouter({
           },
         },
       })
+      await startClaim(input.address, input.govId)
       return {
-        message: `not implemented yet`,
+        message: `success`,
+        data: result,
+      };
+    }),
+
+  get: publicProcedure
+    .input(z.object({ address: z.string() }))
+    .query(async ({ input }) => {
+      const result = await prisma.client.findUnique({
+        where: { address: input.address },
+        include: { recipients: true },
+      })
+      return {
+        message: `success`,
         data: result,
       };
     }),
 });
+
+async function startClaim(address: string, govId: string) {
+  // check government database
+  const body = {
+    address,
+    callbackUrl: "https://app.vercel.app/call"
+  }
+  const url = "https://api.chainjet.io/hooks/21cc524ab93572d54c222bfc1c80e7bf4a7a119eff467fcc"
+  const response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  const result = await response.json()
+  console.log(result)
+}
