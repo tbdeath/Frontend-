@@ -1,23 +1,35 @@
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <>
       <div className="btn-group">
-        <button id="client" className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={() => router.push('/clientDashboard')}>I want to create or modify my will</button>
-        <button id="user" className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={() => router.push('/user/claim')}>I want to register a death to claim will</button>
+        <button
+          id="create"
+          className="rounded border border-gray-400 bg-white px-4 py-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
+          onClick={() => router.push("/create")}
+        >
+          I want to create my will
+        </button>
+        <button
+          id="modify"
+          className="rounded border border-gray-400 bg-white px-4 py-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
+          onClick={() => router.push("/modify")}
+        >
+          I want to modify my will
+        </button>
         <style jsx>{`
-        div {
-          width: 100%;
-          margin-top: 20%;
-        }
-        button {
-          width: 40%;
-          margin-left: 5%;
-        }
-      `}</style>
+          div {
+            width: 100%;
+            margin-top: 20%;
+          }
+          button {
+            width: 40%;
+            margin-left: 5%;
+          }
+        `}</style>
       </div>
     </>
   );
