@@ -1,6 +1,8 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAccount, useBalance } from "wagmi";
+import { z } from "zod";
+import { api } from "~/utils/api";
 
 function Home() {
   
@@ -12,36 +14,11 @@ function Home() {
 
   const [formData, setFormData] = useState({
     sin: "",
-    walletAddress: "",
     numPeopleSplittingWill: 0,
-    recipientName: [""],
-    recipientSin: [""],
     recipientWalletAddress: [""],
     recipientAllocation: [""],
   });
 
-  if (formData.recipientName.length < formData.numPeopleSplittingWill) {
-    let tmp = formData.recipientName;
-    for (
-      let i = 0;
-      i < formData.numPeopleSplittingWill - formData.recipientName.length;
-      i++
-    ) {
-      tmp.push("");
-    }
-    setFormData({ ...formData, recipientName: tmp });
-  }
-  if (formData.recipientSin.length < formData.numPeopleSplittingWill) {
-    let tmp = formData.recipientSin;
-    for (
-      let i = 0;
-      i < formData.numPeopleSplittingWill - formData.recipientSin.length;
-      i++
-    ) {
-      tmp.push("");
-    }
-    setFormData({ ...formData, recipientSin: tmp });
-  }
   if (
     formData.recipientWalletAddress.length < formData.numPeopleSplittingWill
   ) {
@@ -77,32 +54,6 @@ function Home() {
           <input
             className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
             type="text"
-            placeholder="Name"
-            value={formData.recipientName[i]}
-            onChange={(e) => {
-              let tmp = [...formData.recipientName];
-              tmp[i] = e.target.value;
-              setFormData({ ...formData, recipientName: tmp });
-            }}
-          />
-        </td>
-        <td>
-          <input
-            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-            type="text"
-            placeholder="SIN Number"
-            value={formData.recipientSin[i]}
-            onChange={(e) => {
-              let tmp = [...formData.recipientSin];
-              tmp[i] = e.target.value;
-              setFormData({ ...formData, recipientSin: tmp });
-            }}
-          />
-        </td>
-        <td>
-          <input
-            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-            type="text"
             placeholder="Wallet Address"
             value={formData.recipientWalletAddress[i]}
             onChange={(e) => {
@@ -129,6 +80,21 @@ function Home() {
     );
   }
 
+  const createClient = api.client.create.useMutation();
+  const handleSubmit = () => {
+    if (!account.isConnected) return alert("Please connect your wallet");
+    createClient.mutate({
+      address: account.address ?? "",
+      govId: formData.sin,
+      recipients: new Map(formData.recipientWalletAddress.map((address, i) => ([
+        address,
+        {
+          weight: z.number().int().parse(Number(formData.recipientAllocation[i])),
+        }
+      ]))),
+    });
+  }
+
   if (!isReady) {
     return <p>Loading...</p>;
   }
@@ -147,7 +113,14 @@ function Home() {
         </div>
       )}
       <h1>Create Your Will</h1>
-      <form className="mb-4 flex flex-col items-center rounded bg-white px-8 pb-8 pt-6 shadow-md">
+      <form
+        className="mb-4 flex flex-col items-center rounded bg-white px-8 pb-8 pt-6 shadow-md"
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log(formData);
+          handleSubmit();
+        }}
+      >
         <label className="mb-2 block text-sm font-bold text-gray-700">
           SIN Number:
         </label>
@@ -157,20 +130,6 @@ function Home() {
             className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
             value={formData.sin}
             onChange={(e) => setFormData({ ...formData, sin: e.target.value })}
-          ></input>
-        </span>
-        <br />
-        <label className="mb-2 block text-sm font-bold text-gray-700">
-          Wallet Address:
-        </label>
-        <span>
-          <input
-            type="text"
-            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-            value={formData.walletAddress}
-            onChange={(e) =>
-              setFormData({ ...formData, walletAddress: e.target.value })
-            }
           ></input>
         </span>
         <br />

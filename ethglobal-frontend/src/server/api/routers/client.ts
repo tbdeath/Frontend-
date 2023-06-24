@@ -8,7 +8,7 @@ import { prisma } from "~/server/db";
 const inputSchema = z.object({
   address: z.string(),
   govId: z.string(),
-  receipients: z.map(z.string(), z.object({ weight: z.number().int() })),
+  recipients: z.map(z.string(), z.object({ weight: z.number().int() })),
 })
 
 export const clientRouter = createTRPCRouter({
@@ -19,8 +19,8 @@ export const clientRouter = createTRPCRouter({
         data: {
           address: input.address,
           govId: input.govId,
-          receipients: {
-            create: Array.from(input.receipients).map(([address, { weight }]) => ({
+          recipients: {
+            create: Array.from(input.recipients).map(([address, { weight }]) => ({
               toAddress: address,
               weight,
             }))
