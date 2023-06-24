@@ -1,6 +1,15 @@
-import React, { useState } from "react";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { useAccount, useBalance } from "wagmi";
 
 function Home() {
+  
+  const [isReady, setIsReady] = useState(false);
+  useEffect(() => setIsReady(true), []);
+  
+  const account = useAccount()
+  const balance = useBalance({ address: account.address })
+
   const [formData, setFormData] = useState({
     sin: "",
     walletAddress: "",
@@ -120,8 +129,23 @@ function Home() {
     );
   }
 
+  if (!isReady) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
+      {account.isConnected ? (
+        <div>
+          <p>Address: {account.address}</p>
+          <p>Balance: {balance.data?.formatted}</p>
+        </div>
+      ) : (
+        <div className="flex flex-col w-full items-center">
+          <p>Not connected</p>
+          <Link href="/"><button className="border p-2">Connect</button></Link>
+        </div>
+      )}
       <h1>Create Your Will</h1>
       <form className="mb-4 flex flex-col items-center rounded bg-white px-8 pb-8 pt-6 shadow-md">
         <label className="mb-2 block text-sm font-bold text-gray-700">
