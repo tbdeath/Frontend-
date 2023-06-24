@@ -123,7 +123,7 @@ function Home() {
   return (
     <>
       <h1>Create Your Will</h1>
-      <form className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md">
+      <form className="mb-4 flex flex-col items-center rounded bg-white px-8 pb-8 pt-6 shadow-md">
         <label className="mb-2 block text-sm font-bold text-gray-700">
           SIN Number:
         </label>
@@ -135,6 +135,7 @@ function Home() {
             onChange={(e) => setFormData({ ...formData, sin: e.target.value })}
           ></input>
         </span>
+        <br />
         <label className="mb-2 block text-sm font-bold text-gray-700">
           Wallet Address:
         </label>
@@ -148,6 +149,7 @@ function Home() {
             }
           ></input>
         </span>
+        <br />
         <label className="mb-2 block text-sm font-bold text-gray-700">
           How many people will be in your will?
         </label>
@@ -165,10 +167,17 @@ function Home() {
             }}
           ></input>
         </span>
+        <br />
         <div>
           <tbody>{rows}</tbody>
         </div>
-        <button type="submit"></button>
+        <br />
+        <button
+          type="submit"
+          className="rounded border border-gray-400 bg-white px-4 py-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
+        >
+          Submit
+        </button>
       </form>
       <style jsx>{`
         form {
@@ -190,6 +199,10 @@ function Home() {
           display: block;
           overflow: hidden;
           padding: 0px 4px 0px 6px;
+        }
+        button {
+          display: flex;
+          margin: auto;
         }
       `}</style>
     </>
