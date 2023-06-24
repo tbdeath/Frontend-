@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 
 function Home() {
   const [formData, setFormData] = useState({
@@ -18,7 +18,7 @@ function Home() {
       i < formData.numPeopleSplittingWill - formData.recipientName.length;
       i++
     ) {
-      (tmp as string[]).push("");
+      tmp.push("");
     }
     setFormData({ ...formData, recipientName: tmp });
   }
@@ -29,7 +29,7 @@ function Home() {
       i < formData.numPeopleSplittingWill - formData.recipientSin.length;
       i++
     ) {
-      (tmp as string[]).push("");
+      tmp.push("");
     }
     setFormData({ ...formData, recipientSin: tmp });
   }
@@ -43,7 +43,7 @@ function Home() {
       formData.numPeopleSplittingWill - formData.recipientWalletAddress.length;
       i++
     ) {
-      (tmp as string[]).push("");
+      tmp.push("");
     }
     setFormData({ ...formData, recipientWalletAddress: tmp });
   }
@@ -54,65 +54,76 @@ function Home() {
       i < formData.numPeopleSplittingWill - formData.recipientAllocation.length;
       i++
     ) {
-      (tmp as string[]).push("");
+      tmp.push("");
     }
     setFormData({ ...formData, recipientAllocation: tmp });
   }
 
-  const Table = () => {
-    const rows = [];
+  const rows = [];
 
-    for (let i = 0; i < formData.numPeopleSplittingWill; i++) {
-      rows.push(
-        <tr>
-          <td>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              type="text"
-              placeholder="Name"
-              value={formData.recipientName[i]}
-              onChange={(e) => {
-                let tmp = [...formData.recipientName];
-                tmp[i] = e.target.value;
-                setFormData({ ...formData, recipientName: tmp });
-              }}
-            />
-          </td>
-          <td>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              type="text"
-              placeholder="SIN Number"
-            />
-          </td>
-          <td>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              type="text"
-              placeholder="Wallet Address"
-            />
-          </td>
-          <td>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              type="text"
-              placeholder="Percentage of Will"
-            />
-          </td>
-        </tr>
-      );
-    }
-    if (formData.numPeopleSplittingWill != 0) {
-      return <tbody>{rows}</tbody>;
-    } else {
-      return <></>;
-    }
-  };
+  for (let i = 0; i < formData.numPeopleSplittingWill; i++) {
+    rows.push(
+      <tr key={i}>
+        <td>
+          <input
+            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+            type="text"
+            placeholder="Name"
+            value={formData.recipientName[i]}
+            onChange={(e) => {
+              let tmp = [...formData.recipientName];
+              tmp[i] = e.target.value;
+              setFormData({ ...formData, recipientName: tmp });
+            }}
+          />
+        </td>
+        <td>
+          <input
+            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+            type="text"
+            placeholder="SIN Number"
+            value={formData.recipientSin[i]}
+            onChange={(e) => {
+              let tmp = [...formData.recipientSin];
+              tmp[i] = e.target.value;
+              setFormData({ ...formData, recipientSin: tmp });
+            }}
+          />
+        </td>
+        <td>
+          <input
+            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+            type="text"
+            placeholder="Wallet Address"
+            value={formData.recipientWalletAddress[i]}
+            onChange={(e) => {
+              let tmp = [...formData.recipientWalletAddress];
+              tmp[i] = e.target.value;
+              setFormData({ ...formData, recipientWalletAddress: tmp });
+            }}
+          />
+        </td>
+        <td>
+          <input
+            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+            type="text"
+            placeholder="Percentage of Will"
+            value={formData.recipientAllocation[i]}
+            onChange={(e) => {
+              let tmp = [...formData.recipientAllocation];
+              tmp[i] = e.target.value;
+              setFormData({ ...formData, recipientAllocation: tmp });
+            }}
+          />
+        </td>
+      </tr>
+    );
+  }
 
   return (
     <>
       <h1>Create Your Will</h1>
-      <form className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md">
+      <form className="mb-4 flex flex-col items-center rounded bg-white px-8 pb-8 pt-6 shadow-md">
         <label className="mb-2 block text-sm font-bold text-gray-700">
           SIN Number:
         </label>
@@ -124,6 +135,7 @@ function Home() {
             onChange={(e) => setFormData({ ...formData, sin: e.target.value })}
           ></input>
         </span>
+        <br />
         <label className="mb-2 block text-sm font-bold text-gray-700">
           Wallet Address:
         </label>
@@ -137,6 +149,7 @@ function Home() {
             }
           ></input>
         </span>
+        <br />
         <label className="mb-2 block text-sm font-bold text-gray-700">
           How many people will be in your will?
         </label>
@@ -145,15 +158,26 @@ function Home() {
             type="number"
             className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
             value={formData.numPeopleSplittingWill}
-            onChange={(e) =>
+            onChange={(e) => {
               setFormData({
                 ...formData,
                 numPeopleSplittingWill: e.target.valueAsNumber,
-              })
-            }
+              });
+              console.log(formData.numPeopleSplittingWill);
+            }}
           ></input>
         </span>
-        <Table></Table>
+        <br />
+        <div>
+          <tbody>{rows}</tbody>
+        </div>
+        <br />
+        <button
+          type="submit"
+          className="rounded border border-gray-400 bg-white px-4 py-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
+        >
+          Submit
+        </button>
       </form>
       <style jsx>{`
         form {
@@ -175,6 +199,10 @@ function Home() {
           display: block;
           overflow: hidden;
           padding: 0px 4px 0px 6px;
+        }
+        button {
+          display: flex;
+          margin: auto;
         }
       `}</style>
     </>
