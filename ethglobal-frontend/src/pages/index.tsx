@@ -34,6 +34,8 @@ export default function Home() {
             Log in with {connector.name}
           </button>
         ))}
+
+        <button className="border p-2 disabled:opacity-50">Connect</button>
         {account.isConnected && (
           <>
             <p>Address: {account.address}</p>
