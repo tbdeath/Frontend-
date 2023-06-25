@@ -24,9 +24,11 @@ model recipient {
 }
 
 model Client {
-  address     String       @id @map("_id")
-  govId       String
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  recipients recipient[]
+  address          String      @id @map("_id")
+  govId            String
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  claimedStartedAt DateTime?
+  claimed          Boolean     @default(false)
+  recipients       recipient[]
 }

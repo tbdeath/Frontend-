@@ -1,12 +1,7 @@
 import Head from "next/head";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { api } from "~/utils/api";
 import { useConnect, useAccount, useDisconnect, useBalance } from 'wagmi';
 import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
-import { parseEther } from "viem";
-
-const callbackUrl = '/protected'
 
 export default function ClientPage() {
   const [isReady, setIsReady] = useState(false);
