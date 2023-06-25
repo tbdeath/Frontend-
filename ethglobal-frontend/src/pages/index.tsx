@@ -26,28 +26,14 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col gap-4 p-4">
-        {isReady && <p>Status: {account.status}</p>}
-        {/* {isReady && !account.isConnected && connect.connectors.map((connector) => (
-          <button
-            key={connector.id + connector.name}
-            className="border p-2 disabled:opacity-50"
-            onClick={() => connect.connect({ connector })}
-            disabled={connect.isLoading}
-          >
-            Log in with {connector.name}
-             
-          </button>
-          
-        ))} */}
-
+    <div className="flex flex-col" style={{backgroundImage: "url(bg1.jpeg)", height: "100vh"}}>
+        {isReady && <p style={{fontSize: "40px", color: "#75f8cd"}}>Status: {account.status}</p>}
+      <img src="logo.png" width="1000" height="300" style={{marginLeft: "20%", marginTop: "5%" }}/>
+      
         {isReady && !account.isConnected &&
           <Connect />
         }
 
-
-
-        {/* <button className="border p-2 disabled:opacity-50">Connect</button> */}
         {isReady && account.isConnected && (
           <>
             <p>Address: {account.address}</p>
@@ -60,7 +46,7 @@ export default function Home() {
             </button>
           </>
         )}
-      </div>
+      
       {isReady && account.isConnected && (
         <div className="btn-group">
           <button
@@ -78,18 +64,24 @@ export default function Home() {
           >
             I want to modify my will
           </button>
+          
           <style jsx>{`
             div {
               width: 100%;
               margin-top: 20%;
+              height: 100vh;
             }
             button {
               width: 40%;
               margin-left: 5%;
             }
+            p {
+              font-size: 100px;
+            }
           `}</style>
         </div>
       )}
+      </div> 
     </>
 
   );
@@ -98,4 +90,3 @@ export default function Home() {
 
 
 export { exportVar };
-

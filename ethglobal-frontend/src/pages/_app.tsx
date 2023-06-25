@@ -9,12 +9,7 @@ import { Paywall } from '../../node_modules/@unlock-protocol/paywall'
 import { networks } from '@unlock-protocol/networks'
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
-// import {ethers} from 'ethers';
-//import {network} from '../config';
-
-
-//import '../styles/index.css'
-
+import 'daisyui/dist/full.css';
 
 export const paywall = new Paywall(networks);
 
@@ -25,7 +20,7 @@ const walletConnect = new WalletConnectConnector({
     projectId: "d9a4b3e043f60dbc6a41df343a520d92",
   },
 })
- 
+
 const injected = new InjectedConnector()
 
 const { webSocketPublicClient } = configureChains(

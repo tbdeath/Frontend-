@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { type WindowProvider, useAccount, useConnect } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { paywall } from '~/pages/_app';
-
+import 'daisyui/dist/full.css';
 
 export const Connect = () => {
   const { address, isConnected } = useAccount();
@@ -26,11 +26,22 @@ export const Connect = () => {
 
   return (
     <>
+    
       {!isConnected && <button onClick={() => {
         connect()
-      }} className="border-2 border-black rounded-md p-2 hover:bg-black hover:text-white duration-200 transition-colors">Connect</button>  
+      }} className="btn btn-primary">Connect</button>
       }
+      
       {isConnected && <p>Welcome back {address?.slice(0,8)}&hellip;</p>}
+      <style jsx>{`
+            button {
+              width: 40%;
+              margin-left: 30%;
+              margin-right: 20%;
+              margin-top: 5%;
+            }
+            
+          `}</style>
     </>
   )
 }

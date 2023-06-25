@@ -2,6 +2,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAccount, useBalance } from "wagmi";
 import { api } from "~/utils/api";
+import 'daisyui/dist/full.css';
 
 function Home() {
   
@@ -48,7 +49,7 @@ function Home() {
 
   for (let i = 0; i < formData.numPeopleSplittingWill; i++) {
     rows.push(
-      <tr key={i}>
+      <tr key={i} className="danger">
         <td>
           <input
             className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
@@ -109,7 +110,7 @@ function Home() {
       ) : (
         <div className="flex flex-col w-full items-center">
           <p>Not connected</p>
-          <Link href="/"><button className="border p-2">Connect</button></Link>
+          <Link href="/"><button className="btn btn-outline btn-info">Connect</button></Link>
         </div>
       )}
       <h1>Create Your Will</h1>
@@ -157,7 +158,7 @@ function Home() {
         <br />
         <button
           type="submit"
-          className="rounded border border-gray-400 bg-white px-4 py-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
+          className="btn btn-success"
         >
           Submit
         </button>
