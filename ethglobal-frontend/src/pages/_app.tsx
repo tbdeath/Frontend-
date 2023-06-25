@@ -52,7 +52,7 @@ const config = createConfig({
   autoConnect: true,
   webSocketPublicClient, 
   publicClient: createPublicClient({
-    chain: goerli,
+    chain: gnosis,
     transport: http(),
   }),
   connectors: [walletConnect, injected],

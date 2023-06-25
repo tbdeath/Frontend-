@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useConnect, useAccount, useDisconnect, useBalance } from 'wagmi';
+import { useAccount, useDisconnect, useBalance } from 'wagmi';
 import { Connect } from "~/components/Connect";
 
 let exportVar;
@@ -11,7 +11,6 @@ export default function Home() {
   const [isReady, setIsReady] = useState(false);
   useEffect(() => setIsReady(true), []);
 
-  const connect = useConnect()
   const account = useAccount()
   exportVar = account.address;
   const { disconnect } = useDisconnect()
@@ -29,7 +28,7 @@ export default function Home() {
     <>
       <div className="flex flex-col gap-4 p-4">
         {isReady && <p>Status: {account.status}</p>}
-        {isReady && !account.isConnected && connect.connectors.map((connector) => (
+        {/* {isReady && !account.isConnected && connect.connectors.map((connector) => (
           <button
             key={connector.id + connector.name}
             className="border p-2 disabled:opacity-50"
@@ -40,7 +39,7 @@ export default function Home() {
              
           </button>
           
-        ))}
+        ))} */}
 
         {isReady && !account.isConnected &&
           <Connect />
