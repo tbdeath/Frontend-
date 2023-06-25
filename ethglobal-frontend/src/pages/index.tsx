@@ -16,6 +16,10 @@ export default function Home() {
   const { disconnect } = useDisconnect()
 
   const balance = useBalance({ address: account.address })
+  const am = account.address
+  
+  
+
   
   const handleLogout = () => {
     disconnect();
@@ -92,3 +96,11 @@ export default function Home() {
     </>
   );
 }
+
+const account = useAccount()
+const am = account.address
+export {am}
+
+
+
+
