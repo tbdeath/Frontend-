@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useConnect, useAccount, useDisconnect, useBalance,useSendTransaction, usePrepareSendTransaction } from 'wagmi';
 import Connect from './Connect';
 
+let exportVar;
+
 export default function Home() {
   const router = useRouter();
 
@@ -13,13 +15,12 @@ export default function Home() {
 
   const connect = useConnect()
   const account = useAccount()
+  exportVar = account.address;
   const { disconnect } = useDisconnect()
 
   const balance = useBalance({ address: account.address })
   const am = account.address
   
-  
-
   
   const handleLogout = () => {
     disconnect();
@@ -94,13 +95,11 @@ export default function Home() {
         </div>
       )}
     </>
+    
   );
+  
 }
 
-const account = useAccount()
-const am = account.address
-export {am}
 
-
-
+export {exportVar};
 
