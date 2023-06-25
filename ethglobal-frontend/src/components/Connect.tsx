@@ -29,14 +29,14 @@ export const Connect = () => {
     
       {!isConnected && <button onClick={() => {
         connect()
-      }} className="btn btn-primary">Connect</button>
+      }} className="btn btn-primary" style={{fontSize: "30px"}}>Connect</button>
       }
       
       {isConnected && <p>Welcome back {address?.slice(0,8)}&hellip;</p>}
       <style jsx>{`
             button {
-              width: 40%;
-              margin-left: 30%;
+              width: 30%;
+              margin-left: 35%;
               margin-right: 20%;
               margin-top: 5%;
             }
