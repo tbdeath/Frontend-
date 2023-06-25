@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useConnect, useAccount, useDisconnect, useBalance,useSendTransaction, usePrepareSendTransaction } from 'wagmi';
+import { useConnect, useAccount, useDisconnect, useBalance } from 'wagmi';
 import Connect from './Connect';
 
 let exportVar;
@@ -11,17 +11,16 @@ export default function Home() {
   const [isReady, setIsReady] = useState(false);
   useEffect(() => setIsReady(true), []);
 
-
-
   const connect = useConnect()
   const account = useAccount()
   exportVar = account.address;
   const { disconnect } = useDisconnect()
 
   const balance = useBalance({ address: account.address })
-  const am = account.address
-  
-  
+
+  console.log(balance)
+
+
   const handleLogout = () => {
     disconnect();
   }
@@ -29,10 +28,10 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-col gap-4 p-4">
-        <p>Status: {account.status}</p>
-        {/* {isReady && !account.isConnected && connect.connectors.map((connector) => (
+        {isReady && <p>Status: {account.status}</p>}
+        {isReady && !account.isConnected && connect.connectors.map((connector) => (
           <button
-            key={connector.id}
+            key={connector.id + connector.name}
             className="border p-2 disabled:opacity-50"
             onClick={() => connect.connect({ connector })}
             disabled={connect.isLoading}
@@ -41,18 +40,16 @@ export default function Home() {
              
           </button>
           
-        ))} */}
+        ))}
 
-      {isReady && !account.isConnected  &&
-          <button>
-            <Connect></Connect>
-          </button>
+        {isReady && !account.isConnected &&
+          <Connect />
         }
-         
 
 
-      {/* <button className="border p-2 disabled:opacity-50">Connect</button> */}
-        {account.isConnected && (
+
+        {/* <button className="border p-2 disabled:opacity-50">Connect</button> */}
+        {isReady && account.isConnected && (
           <>
             <p>Address: {account.address}</p>
             <p>Balance: {balance.data?.formatted}</p>
@@ -65,7 +62,7 @@ export default function Home() {
           </>
         )}
       </div>
-      {account.isConnected && (
+      {isReady && account.isConnected && (
         <div className="btn-group">
           <button
             id="create"
@@ -73,7 +70,7 @@ export default function Home() {
             onClick={() => router.push("/create")}
           >
             I want to create my will
-            
+
           </button>
           <button
             id="modify"
@@ -95,11 +92,11 @@ export default function Home() {
         </div>
       )}
     </>
-    
+
   );
-  
+
 }
 
 
-export {exportVar};
+export { exportVar };
 

@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
-import { NextApiRequest, NextApiResponse } from "next";
-import { ZodType, z } from "zod";
+import { type NextApiRequest, type NextApiResponse } from "next";
+import { type ZodType, z } from "zod";
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
 

@@ -1,5 +1,5 @@
-import { type AppType,AppProps } from "next/app";
-import { WagmiConfig, createConfig, configureChains,mainnet } from 'wagmi';
+import { type AppType } from "next/app";
+import { WagmiConfig, createConfig, configureChains } from 'wagmi';
 import { gnosis, goerli } from 'wagmi/chains'
 import { createPublicClient, http } from 'viem'
 import { publicProvider } from 'wagmi/providers/public';
@@ -9,7 +9,7 @@ import { Paywall } from '../../node_modules/@unlock-protocol/paywall'
 import { networks } from '@unlock-protocol/networks'
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
-import {ethers} from 'ethers';
+// import {ethers} from 'ethers';
 //import {network} from '../config';
 
 
@@ -28,7 +28,7 @@ const walletConnect = new WalletConnectConnector({
  
 const injected = new InjectedConnector()
 
-const { publicClient, webSocketPublicClient } = configureChains(
+const { webSocketPublicClient } = configureChains(
   [gnosis, goerli],
   [publicProvider()],
 )

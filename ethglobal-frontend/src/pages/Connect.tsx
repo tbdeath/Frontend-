@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useAccount, useConnect } from 'wagmi';
+import { type WindowProvider, useAccount, useConnect } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { paywall } from '../pages/_app';
 
@@ -9,7 +9,7 @@ const Connect = () => {
   
   // Retrieve the wallet provider from the paywall library
   const provider = useMemo(() => {
-    return paywall.getProvider("https://app.unlock-protocol.com"); 
+    return paywall.getProvider("https://app.unlock-protocol.com") as WindowProvider; 
   }, []);
 
   const { connect } = useConnect({
