@@ -52,7 +52,7 @@ function Home() {
       <tr key={i} className="danger">
         <td>
           <input
-            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+            className="input input-bordered input-primary w-full max-w-xs"
             type="text"
             placeholder="Wallet Address"
             value={formData.recipientWalletAddress[i]}
@@ -65,7 +65,7 @@ function Home() {
         </td>
         <td>
           <input
-            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+            className="input input-bordered input-primary w-full max-w-xs"
             type="number"
             step={1}
             placeholder="Weight of Will"
@@ -102,10 +102,11 @@ function Home() {
 
   return (
     <>
+    <div style={{backgroundColor: "#540cfc"}}>
       {account.isConnected ? (
         <div>
-          <p>Address: {account.address}</p>
-          <p>Balance: {balance.data?.formatted}</p>
+          <p style={{color: "#75f8cd"}}>Address: {account.address}</p>
+          <p style={{color: "#75f8cd"}}>Balance: {balance.data?.formatted}</p>
         </div>
       ) : (
         <div className="flex flex-col w-full items-center">
@@ -113,7 +114,12 @@ function Home() {
           <Link href="/"><button className="btn btn-outline btn-info">Connect</button></Link>
         </div>
       )}
-      <h1>Create Your Will</h1>
+      <h1 style={{color: "#75f8cd"}}>Create Your Will</h1>
+      <br/>
+      <br/>
+      <br/>
+      </div>
+      <br/>
       <form
         className="mb-4 flex flex-col items-center rounded bg-white px-8 pb-8 pt-6 shadow-md"
         onSubmit={(e) => {
@@ -122,25 +128,26 @@ function Home() {
           handleSubmit();
         }}
       >
-        <label className="mb-2 block text-sm font-bold text-gray-700">
-          SIN Number:
+        <div style={{marginLeft: "35%"}}>
+        <label className="mb-2 block text-sm font-bold text-gray-700" style={{marginTop: "10px"}}>
+          <b>SIN Number:</b>
         </label>
         <span>
           <input
             type="text"
-            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+            className="input input-bordered input-primary w-full max-w-xs"
             value={formData.sin}
             onChange={(e) => setFormData({ ...formData, sin: e.target.value })}
           ></input>
         </span>
         <br />
         <label className="mb-2 block text-sm font-bold text-gray-700">
-          How many people will be in your will?
+          <b>How many people will be in your will?</b>
         </label>
         <span>
           <input
             type="number"
-            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+            className="input input-bordered input-primary w-full max-w-xs"
             value={formData.numPeopleSplittingWill}
             onChange={(e) => {
               setFormData({
@@ -155,10 +162,12 @@ function Home() {
         <div>
           <tbody>{rows}</tbody>
         </div>
+        </div>
         <br />
         <button
           type="submit"
-          className="btn btn-success"
+          className="btn btn-primary"
+          style={{width: "12%"}}
         >
           Submit
         </button>
