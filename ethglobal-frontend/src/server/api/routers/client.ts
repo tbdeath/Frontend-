@@ -36,7 +36,7 @@ export const clientRouter = createTRPCRouter({
           },
         },
       })
-      await startClaim(input.address, input.govId)
+      await startClaim(input.address, input.govId, "https://frontend-lac-five.vercel.app")
       return {
         message: `success`,
         data: result,
@@ -57,11 +57,13 @@ export const clientRouter = createTRPCRouter({
     }),
 });
 
-async function startClaim(address: string, govId: string) {
-  // check government database
+async function startClaim(address: string, govId: string, rootUrl: string) {
+  // check government 
+  // callback url is relative to the server
   const body = {
     address,
-    callbackUrl: "https://app.vercel.app/call"
+    govId,
+    callbackUrl: `${rootUrl}/api/callback/claimTimeout`,
   }
   const url = "https://api.chainjet.io/hooks/21cc524ab93572d54c222bfc1c80e7bf4a7a119eff467fcc"
   const response = await fetch(url, {
@@ -71,6 +73,6 @@ async function startClaim(address: string, govId: string) {
       "Content-Type": "application/json",
     },
   })
-  const result = await response.json()
+  const result: unknown = await response.json()
   console.log(result)
 }

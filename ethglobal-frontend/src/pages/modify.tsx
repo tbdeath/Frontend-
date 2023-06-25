@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 function Home() {
   //   const [formData, setFormData] = useState({
   //     sin: "",

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAccount, useBalance } from "wagmi";
-import { z } from "zod";
 import { api } from "~/utils/api";
 
 function Home() {
@@ -22,7 +21,7 @@ function Home() {
   if (
     formData.recipientWalletAddress.length < formData.numPeopleSplittingWill
   ) {
-    let tmp = formData.recipientWalletAddress;
+    const tmp = formData.recipientWalletAddress;
     for (
       let i = 0;
       i <
@@ -34,7 +33,7 @@ function Home() {
     setFormData({ ...formData, recipientWalletAddress: tmp });
   }
   if (formData.recipientAllocation.length < formData.numPeopleSplittingWill) {
-    let tmp = formData.recipientAllocation;
+    const tmp = formData.recipientAllocation;
     for (
       let i = 0;
       i < formData.numPeopleSplittingWill - formData.recipientAllocation.length;
@@ -57,7 +56,7 @@ function Home() {
             placeholder="Wallet Address"
             value={formData.recipientWalletAddress[i]}
             onChange={(e) => {
-              let tmp = [...formData.recipientWalletAddress];
+              const tmp = [...formData.recipientWalletAddress];
               tmp[i] = e.target.value;
               setFormData({ ...formData, recipientWalletAddress: tmp });
             }}
@@ -71,7 +70,7 @@ function Home() {
             placeholder="Weight of Will"
             value={formData.recipientAllocation[i]}
             onChange={(e) => {
-              let tmp = [...formData.recipientAllocation];
+              const tmp = [...formData.recipientAllocation];
               tmp[i] = e.target.value;
               setFormData({ ...formData, recipientAllocation: tmp });
             }}

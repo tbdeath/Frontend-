@@ -1,8 +1,6 @@
 import { useRouter } from "next/navigation";
-import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useConnect, useAccount, useDisconnect, useBalance } from 'wagmi';
-import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
 
 export default function Home() {
   const router = useRouter();
