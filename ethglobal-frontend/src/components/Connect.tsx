@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { type WindowProvider, useAccount, useConnect } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected'
-import { paywall } from '../pages/_app';
+import { paywall } from '~/pages/_app';
 
 
-const Connect = () => {
+export const Connect = () => {
   const { address, isConnected } = useAccount();
   
   // Retrieve the wallet provider from the paywall library
@@ -34,5 +34,3 @@ const Connect = () => {
     </>
   )
 }
-
-export default Connect

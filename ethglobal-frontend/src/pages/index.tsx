@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useConnect, useAccount, useDisconnect, useBalance } from 'wagmi';
-import Connect from './Connect';
+import { Connect } from "~/components/Connect";
 
 let exportVar;
 
