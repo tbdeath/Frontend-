@@ -3,12 +3,14 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useConnect, useAccount, useDisconnect, useBalance } from 'wagmi';
 import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
-
+import Connect from './Connect';
 export default function Home() {
   const router = useRouter();
-  
+
   const [isReady, setIsReady] = useState(false);
   useEffect(() => setIsReady(true), []);
+
+
 
   const connect = useConnect()
   const account = useAccount()
@@ -32,10 +34,20 @@ export default function Home() {
             disabled={connect.isLoading}
           >
             Log in with {connector.name}
+             
           </button>
+          
         ))}
 
-        <button className="border p-2 disabled:opacity-50">Connect</button>
+      {isReady && !account.isConnected  &&
+          <button>
+            LOGGGGGGG <Connect></Connect>
+          </button>
+        }
+         
+
+
+      {/* <button className="border p-2 disabled:opacity-50">Connect</button> */}
         {account.isConnected && (
           <>
             <p>Address: {account.address}</p>
@@ -57,6 +69,7 @@ export default function Home() {
             onClick={() => router.push("/create")}
           >
             I want to create my will
+            
           </button>
           <button
             id="modify"
